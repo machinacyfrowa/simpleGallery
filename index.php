@@ -7,4 +7,14 @@ $fileList = array_diff($fileList, Array('.','..'));// usuń . i .. (ten katalog 
 echo '<pre>';
 print_r($fileList);
 
+foreach ($fileList as $key => $value) {
+    $image = '<img style="width: 25%; float:left" src="img/';
+    $image .= $value;
+    $image .= '">';
+
+    echo $image;
+}
+
+
 ?>
+
