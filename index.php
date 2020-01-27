@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="style.css">
     <title>Hello, world!</title>
   </head>
   <body>
@@ -20,11 +20,9 @@ $fileList = array_diff($fileList, Array('.','..'));// usuń . i .. (ten katalog 
 
 
 foreach ($fileList as $key => $value) {
-    $image = '<img class="col-3" src="img/';
+    $image = '<img onClick="showLightbox()" class="col-3" src="img/';
     $image .= $value;
-    $image .= '"  data-toggle="modal" 
-                    data-target="#exampleModal"
-                        data-url="img/'.$value.'">';
+    $image .= '">';
 
     echo $image;
 }
@@ -32,39 +30,39 @@ foreach ($fileList as $key => $value) {
 
 ?>
 </div><!-- /container-fluid -->
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <img class="img-fluid" src="img/Moody_Landscapes_1.jpg">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
+<div class="lightbox" id="lightbox">
+    <img id="lightboxImage" 
+        src="http://localhost/simplegallery/img/Moody_Landscapes_1.jpg"
+        onClick="hideLightbox()">
 </div>
-
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script>
-$('#exampleModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var url = button.data('url') // Extract info from data-* attributes
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-  var modal = $(this)
-  modal.find('.modal-body img').attr("src", url);
-})
-</script>
+<script>
+    function showLightbox() 
+    {  
+        var source = event.target || event.srcElement;
+        document.getElementById("lightboxImage").src = source.src;
+        document.getElementById("lightbox").style.display = "block";
+        centerPhoto();
+    }
+    function centerPhoto() 
+    {
+        var totalWidth = document.getElementById("lightbox").offsetWidth;
+        var totalHeight = document.getElementById("lightbox").offsetHeight;
+        var image = document.getElementById("lightboxImage");
+        var imageWidth = image.width;
+        var imageHeight = image.height;
+
+        var positionLeft = ( totalWidth - imageWidth ) / 2;
+        var positionTop = ( totalHeight - imageHeight ) / 2;
+        image.style.left = positionLeft + "px";
+        image.style.top = positionTop + "px";
+    }
+    function hideLightbox() 
+    {
+        document.getElementById("lightbox").style.display = "none";
+    }
+    </script>
   </body>
 </html>
